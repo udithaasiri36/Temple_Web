@@ -93,6 +93,75 @@
 
 
 
+        /* Motor Card - Responsive */
+        .motor-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 80%;
+            max-width: 300px;
+            padding: 18px;
+            color: #141313;
+            transition: all 0.4s ease-in-out;
+            margin: 20px auto;
+        }
+
+        .motor-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        .motor-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .motor-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #333;
+        }
+
+        .motor-status h3 {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 4px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin: 3px 0;
+            border-left: 2px solid #ffffff;
+            color: #444;
+        }
+        
+        .motor-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 123, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #007bff;
+            font-size: 1.2rem;
+        }
+        
+        .motor-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+
+
+
+
 </style>
      
 
@@ -100,8 +169,35 @@
 </head>
 <body>
     
-    
-                  <!-- කාට් කාඩ් එක -->
+
+
+                       
+                                 
+
+            <div class="motor-card">
+               <div class="motor-header">
+                    <div class="motor-icon">
+                        🖥
+                    </div>
+                    <h2>Pump House Display</h2>
+                    
+                </div>
+                
+                <div class="motor-status">
+
+                    <h3 id="Tank_Conn">Loading...</h3>
+                    <h3 id="Pump_Conn">Loading...</h3>
+
+                    <h3 id="Motor_01">Motor_01</h3>
+                    <h3 id="Motor_02">Motor_02</h3>
+                    <h3 id="Motor_03">Motor_03</h3>
+                    <h3 id="Motor_04">Motor_04</h3>
+
+                    <h3 id="last-updated" class="timestamp">Last updated: Loading...</h3>
+                 
+                </div>
+                
+                <!-- කාට් කාඩ් එක -->
                 <div class="cart-card">
                   <!--  <div class="cart-title">🛒 අතුරුමුද්‍රණය කරන්න</div> --> 
                     <div class="button-group">
@@ -111,8 +207,18 @@
                                             
                    </div>
                </div>
+            </div>
 
 
+
+
+
+
+
+
+
+
+            
 
 
 </body>
