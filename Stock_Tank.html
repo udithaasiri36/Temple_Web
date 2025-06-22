@@ -490,14 +490,14 @@
                 if(Tank_Err_Count_Up > 20) { Tank_Err_Count_Up = 15; }
                 if(Tank_Err_Count_Down > 20) { Tank_Err_Count_Down = 15; }
 
-                if(Tank_Err_Count_Up <= 8 && Tank_Err_Count_Down <= 8 && Stating_Delay_Time >= 10) {  // connect
+                if(Tank_Err_Count_Up <= 8 && Tank_Err_Count_Down <= 8 && Stating_Delay_Time >= 10) {  //################# Connect 
 
                     Tank_Conn_Bit = 1;
                     document.getElementById('Tank_Conn').innerHTML = 
                     `Stock Tank Unit : <span style="color: green;">${"Good"}</span>`;
 
 
-                if(String(value).charAt(1) === '2') { // No_Power_BATTRY Check
+                if(String(value).charAt(1) === '2') { //########### No_Power_BATTRY Check
 
                     document.getElementById('No_Power_BATTRY').innerHTML = 
                    `24V Battery      : <span style="color: green;">${"Good"}</span>`;
@@ -506,10 +506,96 @@
                  }else{
 
                     document.getElementById('No_Power_BATTRY').innerHTML = 
-                   `24V Battery      : <span style="color: indigo;">${"Battery Off"}</span>`;
+                   `24V Battery      : <span style="color: indigo;">${"Battery Cut"}</span>`;
                     
 
-                } // No_Power_BATTRY Check End
+                } // ############ No_Power_BATTRY Check End
+
+
+
+                  if(String(value).charAt(2) === '2') { //########### No_Power_BATTRY Check
+
+                    document.getElementById('No_Power_CEB').innerHTML = 
+                   `CEB Power      : <span style="color: green;">${"Good"}</span>`;
+
+
+                 }else{
+
+                    document.getElementById('No_Power_CEB').innerHTML = 
+                   `CEB Power      : <span style="color: indigo;">${"CEB Power Cut"}</span>`;
+                    
+
+                } // ############ No_Power_BATTRY Check End
+
+
+
+
+
+            if(String(value).charAt(1) === '2') { //################################# Battry Power Eka tibboth Pamanak Level Ok karanna
+
+
+
+                 if(String(value).charAt(3) === '5') { //########### Tank_01_Limit Check
+
+                    document.getElementById('Tank_01_Limit').innerHTML = 
+                   `Tank 01 Limit      : <span style="color: red;">${"ERROR"}</span>`;
+
+
+                 }else{
+
+                    document.getElementById('Tank_01_Limit').innerHTML = 
+                   `Tank 01 Limit      : <span style="color: green;">${"Good"}</span>`;
+                    
+
+                } // ############ Tank_01_Limit Check End
+
+
+
+                 if(String(value).charAt(4) === '5') { //########### Tank_02_Limit Check
+
+                    document.getElementById('Tank_02_Limit').innerHTML = 
+                   `Tank 02 Limit      : <span style="color: red;">${"ERROR"}</span>`;
+
+
+                 }else{
+
+                    document.getElementById('Tank_02_Limit').innerHTML = 
+                   `Tank 02 Limit      : <span style="color: green;">${"Good"}</span>`;
+                    
+
+                } // ############ Tank_02_Limit Check End
+
+
+                 if(String(value).charAt(5) === '5') { //########### Tank_03_Limit Check
+
+                    document.getElementById('Tank_03_Limit').innerHTML = 
+                   `Tank 03 Limit      : <span style="color: red;">${"ERROR"}</span>`;
+
+
+                 }else{
+
+                    document.getElementById('Tank_03_Limit').innerHTML = 
+                   `Tank 03 Limit      : <span style="color: green;">${"Good"}</span>`;
+                    
+
+                } // ############ Tank_03_Limit Check End     
+                
+                
+                 }else{
+
+
+                    document.getElementById('Tank_01_Limit').innerHTML = 
+                   `Tank 01 Limit      : <span style="color: indigo;">${"No Power"}</span>`;
+
+                    document.getElementById('Tank_02_Limit').innerHTML = 
+                   `Tank 02 Limit      : <span style="color: indigo;">${"No Power"}</span>`;
+
+                    document.getElementById('Tank_03_Limit').innerHTML = 
+                   `Tank 03 Limit      : <span style="color: indigo;">${"No Power"}</span>`;
+
+
+
+            }//################################# Battry Power Eka tibboth Pamanak Level Ok karanna End
 
 
 
