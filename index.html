@@ -477,6 +477,8 @@
         let Tank_Err_Count_Up = 0;
         let Tank_Err_Count_Down = 0;
         let Tank_Conn_Bit = 99;
+        let Battry_Cut_Bit = 0;
+        let CEB_Cut_Bit = 0;
         
         // 🏗️ Create data item helper function
         function createDataItem(container, key, value) {
@@ -492,7 +494,11 @@
                 Stating_Delay_Time = 15;
             }
 
-            if (key === "Tank") {  
+
+
+
+            if (key === "Tank") {
+
                 if(String(value).charAt(0) === '1') {
                     Tank_Err_Count_Up = 0;
                 }
@@ -501,16 +507,125 @@
                     Tank_Err_Count_Down = 0;
                 }
 
+
+
+                if(String(value).charAt(1) === '2') { // Battry Cut
+
+                    Battry_Cut_Bit = 1;
+
+                   }else{
+
+                    Battry_Cut_Bit = 0;
+                     
+                }//// Battry Cut End
+
+
+                if(String(value).charAt(2) === '2') { // CEB Cut
+
+                    CEB_Cut_Bit = 1;
+
+                   }else{
+
+                    CEB_Cut_Bit = 0;
+                     
+                }//// CEB Cut End
+
+
+
+
+
                 if(Tank_Err_Count_Up > 20) { Tank_Err_Count_Up = 15; }
                 if(Tank_Err_Count_Down > 20) { Tank_Err_Count_Down = 15; }
 
-                if(Tank_Err_Count_Up <= 8 && Tank_Err_Count_Down <= 8 && Stating_Delay_Time >= 10) {
-                    Tank_Conn_Bit = 1;
-                    document.getElementById('Tank_Conn').innerHTML = 
-                    `Stock Tank Unit : <span style="color: green;">${"Good"}</span>`;
-                }
 
+                if(Tank_Err_Count_Up <= 8 && Tank_Err_Count_Down <= 8 && Stating_Delay_Time >= 10 ) { // coon ok and battry Power and Ceb  Nam
+
+
+
+
+                  if(Battry_Cut_Bit == 1 && CEB_Cut_Bit == 0){ //// Battry Power Ok CEB NOT Ok nam
+
+                      Tank_Conn_Bit = 1; 
+                      document.getElementById('Tank_Conn').innerHTML = 
+                     `Stock Tank Unit : <span style="color: green;">${"Battery Power Run"}</span>`;  
+
+                  }//// Battry Power Ok CEB NOT Ok nam END
+
+
+
+                  if(Battry_Cut_Bit == 1 && CEB_Cut_Bit == 1){ //// Battry Power Ok CEB  Ok nam
+
+                      Tank_Conn_Bit = 1; 
+                      document.getElementById('Tank_Conn').innerHTML = 
+                     `Stock Tank Unit : <span style="color: green;">${"Good"}</span>`;  
+
+                  }//// Battry Power Ok CEB Ok nam END
+
+
+
+
+
+
+
+                  if(Battry_Cut_Bit == 0 && CEB_Cut_Bit == 1){ //// Battry Power err CEB  Ok nam
+
+                    Tank_Conn_Bit = 0; 
+
+                    document.getElementById('Tank_Conn').innerHTML = 
+                    `Stock Tank Unit : <span style="color: red;">${"CEB Ok | Battery Err"}</span>`;
+
+                    let tankElement = document.getElementById('Tank_01');
+                    tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
+                    document.getElementById("Tank_01").style.height = "100%";
+
+                    tankElement = document.getElementById('Tank_02');
+                    tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
+                    document.getElementById("Tank_02").style.height = "100%";
+
+                    tankElement = document.getElementById('Tank_03');
+                    tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
+                    document.getElementById("Tank_03").style.height = "100%";
+
+                  }//// Battry Power err CEB  Ok nam END
+
+
+
+
+
+                  if(Battry_Cut_Bit == 0 && CEB_Cut_Bit == 0){ //// Battry Power err CEB  err nam
+
+                    Tank_Conn_Bit = 0; 
+
+                    document.getElementById('Tank_Conn').innerHTML = 
+                    `Stock Tank Unit : <span style="color: red;">${"No Power"}</span>`;
+
+                    let tankElement = document.getElementById('Tank_01');
+                    tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
+                    document.getElementById("Tank_01").style.height = "100%";
+
+                    tankElement = document.getElementById('Tank_02');
+                    tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
+                    document.getElementById("Tank_02").style.height = "100%";
+
+                    tankElement = document.getElementById('Tank_03');
+                    tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
+                    document.getElementById("Tank_03").style.height = "100%";
+
+                  }//// Battry Power err CEB  err nam END
+
+
+
+                }// battry Power OK Nam
+
+                  
+                  
+
+
+
+
+               
                 if(Tank_Err_Count_Up > 8 || Tank_Err_Count_Down > 8 && Stating_Delay_Time >= 10) {
+
                     Tank_Conn_Bit = 0;
                     document.getElementById('Tank_Conn').innerHTML = 
                     `Stock Tank Unit : <span style="color: red;">${"ERROR"}</span>`;
@@ -526,14 +641,19 @@
                     tankElement = document.getElementById('Tank_03');
                     tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
                     document.getElementById("Tank_03").style.height = "100%";
+
                 }
 
                 if(Tank_Conn_Bit == 99) {
+
                     Tank_Conn_Bit = 0;
                     document.getElementById('Tank_Conn').innerHTML = 
                     `Stock Tank Unit : <span style="color: blue;">${"Please Wait..."}</span>`;
                 }
             }
+
+
+
 
             // Tank level control logic
             if (key === "Tank" && Tank_Conn_Bit == 1) {
