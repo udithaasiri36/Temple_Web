@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
   <title>Password Protected Control</title>
   <style>
     *, *::before, *::after {
@@ -143,14 +146,6 @@
       background: #1769aa;
     }
 
-    .button-group {
-      display: flex;
-      gap: 8px;
-      margin-top: 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
     a {
       display: inline-block;
       margin-top: 10px;
@@ -167,7 +162,6 @@
       background: #00796b;
     }
 
-    /* Responsive tweaks */
     @media (max-width: 480px) {
       .container {
         padding: 15px 20px;
@@ -203,21 +197,97 @@
         transform: translateX(24px);
       }
     }
+
+
+  .button-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+
+.cat-button {
+  flex: 1 1 auto;
+  max-width: 200px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;           /* Reduced padding */
+  font-size: 15px;              /* Slightly smaller font */
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  text-decoration: none;
+  color: white;
+  background: linear-gradient(135deg, #798b97, #7873f5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: auto;                /* Prevent fixed height */
+  min-height: 42px;            /* Ensure it's tappable */
+  line-height: 1.2;            /* Balanced text height */
+}
+
+.cat-button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(135deg, #a18f9b, #5f5bd7);
+}
+
+.cat-button i {
+  font-size: 17px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 500px) {
+  .button-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cat-button {
+    width: 100%;
+    max-width: none;
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+}
+
+
+
   </style>
 </head>
 <body>
   <div class="container">
-    <h3>Enter Password</h3>
-    <input
-      type="password"
-      id="passwordInput"
-      placeholder="Password"
-      inputmode="numeric"
-      pattern="\d*"
-    />
+
+    <h2>Enter Password</h2>
+    
+    <input type="password" id="passwordInput" placeholder="Password" inputmode="numeric" pattern="\d*" />
+    
+
+<div class="button-row">
+
+
+    
+  <button id="loginBtn" class="cat-button">
+    <i class="fa-solid fa-cat"></i> Login
+  </button>
+
+  <a href="index.html" class="cat-button">
+    <i class="fa-solid fa-cat"></i>  Display 
+  </a>
+
+
+
+
+</div>
+
     <div class="error" id="errorMsg"></div>
 
-    <a href="index.html">Home Page</a>
+    
 
     <div class="box" id="secretBox">
       <div class="mode-text" id="modeLabel">Mode: Manual</div>
@@ -262,60 +332,96 @@
   <script>
     const correctPassword = "12345";
     const passwordInput = document.getElementById("passwordInput");
+    const loginBtn = document.getElementById("loginBtn");
     const secretBox = document.getElementById("secretBox");
     const errorMsg = document.getElementById("errorMsg");
     const modeSwitch = document.getElementById("modeSwitch");
     const modeLabel = document.getElementById("modeLabel");
     const motorSection = document.getElementById("motorSection");
 
+    const motor1Toggle = document.getElementById("motor1");
+    const motor2Toggle = document.getElementById("motor2");
+    const motor3Toggle = document.getElementById("motor3");
+    const motor4Toggle = document.getElementById("motor4");
+
     let attempts = 0;
     let locked = false;
-    let on_data = 1; // default to Auto (1 = Auto, 0 = Manual)
+
+    let on_data = 1; // 1 = Auto, 0 = Manual
+    let motor1_state = 1;
+    let motor2_state = 0;
+    let motor3_state = 1;
+    let motor4_state = 0;
 
     function updateToggleFromVariable() {
-      if (on_data === 0) {
-        modeSwitch.checked = true; // Auto mode ON
-      } else {
-        modeSwitch.checked = false; // Manual mode ON
-      }
+      modeSwitch.checked = on_data === 0;
       updateModeDisplay();
     }
 
     function updateModeDisplay() {
-      const isManual = !modeSwitch.checked; // checked = Auto, unchecked = Manual
+      const isManual = !modeSwitch.checked;
       modeLabel.textContent = `Mode: ${isManual ? "Manual" : "Auto"}`;
       motorSection.style.display = isManual ? "block" : "none";
     }
 
-    passwordInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" && !locked) {
-        const input = passwordInput.value;
-        if (input === correctPassword) {
-          secretBox.classList.add("visible");
-          errorMsg.textContent = "";
-          updateToggleFromVariable();
-        } else {
-          attempts++;
-          errorMsg.textContent = `Incorrect password (${attempts}/3)`;
-          if (attempts >= 3) {
-            locked = true;
-            errorMsg.textContent = "Too many attempts. Try again in 30s.";
-            passwordInput.disabled = true;
-            setTimeout(() => {
-              passwordInput.disabled = false;
-              errorMsg.textContent = "";
-              attempts = 0;
-              locked = false;
-            }, 30000);
-          }
+    function tryLogin() {
+      if (locked) return;
+      const input = passwordInput.value;
+      if (input === correctPassword) {
+        secretBox.classList.add("visible");
+        errorMsg.textContent = "";
+        updateToggleFromVariable();
+      } else {
+        attempts++;
+        errorMsg.textContent = `Incorrect password (${attempts}/3)`;
+        if (attempts >= 3) {
+          locked = true;
+          errorMsg.textContent = "Too many attempts. Try again in 30s.";
+          passwordInput.disabled = true;
+          loginBtn.disabled = true;
+          setTimeout(() => {
+            passwordInput.disabled = false;
+            loginBtn.disabled = false;
+            errorMsg.textContent = "";
+            attempts = 0;
+            locked = false;
+          }, 30000);
         }
       }
+    }
+
+    passwordInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        tryLogin();
+      }
     });
+
+    loginBtn.addEventListener("click", tryLogin);
 
     modeSwitch.addEventListener("change", () => {
       on_data = modeSwitch.checked ? 1 : 0;
       updateModeDisplay();
       console.log("on_data =", on_data);
+    });
+
+    motor1Toggle.addEventListener("change", () => {
+      motor1_state = motor1Toggle.checked ? 1 : 0;
+      console.log("Motor 1 =", motor1_state);
+    });
+
+    motor2Toggle.addEventListener("change", () => {
+      motor2_state = motor2Toggle.checked ? 1 : 0;
+      console.log("Motor 2 =", motor2_state);
+    });
+
+    motor3Toggle.addEventListener("change", () => {
+      motor3_state = motor3Toggle.checked ? 1 : 0;
+      console.log("Motor 3 =", motor3_state);
+    });
+
+    motor4Toggle.addEventListener("change", () => {
+      motor4_state = motor4Toggle.checked ? 1 : 0;
+      console.log("Motor 4 =", motor4_state);
     });
 
     window.onload = () => {
