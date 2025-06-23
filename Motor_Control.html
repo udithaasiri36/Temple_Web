@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Password Protected Control</title>
   <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
     body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #c1e0da, #acb6e5);
-            font-family: 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            backdrop-filter: blur(4px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+      margin: 0;
+      padding: 10px;
+      background: linear-gradient(135deg, #c1e0da, #acb6e5);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
     }
 
     .container {
       background: white;
       padding: 20px 30px;
       border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-      width: 95%;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
       max-width: 400px;
       text-align: center;
+      margin: 0 10px;
     }
 
     input[type="password"] {
@@ -60,6 +67,7 @@
       background: #ccc;
       border-radius: 30px;
       cursor: pointer;
+      transition: background 0.3s;
     }
 
     .toggle label::after {
@@ -87,7 +95,7 @@
       padding: 15px;
       background: #e3f2fd;
       border: 1px solid #90caf9;
-      border-radius: 1px;
+      border-radius: 8px;
       display: none;
     }
 
@@ -119,26 +127,28 @@
     }
 
     button {
-      padding: 10px 20px;
+      padding: 12px 24px;
       margin-top: 10px;
       background: #2196f3;
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      transition: background 0.3s;
     }
 
-    @media(max-width: 400px) {
-      .motor-toggle span {
-        font-size: 14px;
-      }
+    button:hover {
+      background: #1769aa;
     }
 
     .button-group {
       display: flex;
       gap: 8px;
-      margin-top: 0px;
+      margin-top: 0;
       flex-wrap: wrap;
+      justify-content: center;
     }
 
     a {
@@ -147,64 +157,101 @@
       text-decoration: none;
       background: #009688;
       color: white;
-      padding: 10px 16px;
+      padding: 12px 20px;
       border-radius: 6px;
+      font-size: 16px;
+      transition: background 0.3s;
     }
 
     a:hover {
       background: #00796b;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      .container {
+        padding: 15px 20px;
+        max-width: 100%;
+      }
+
+      .mode-text {
+        font-size: 16px;
+      }
+
+      .motor-control span {
+        font-size: 14px;
+      }
+
+      button, a {
+        padding: 10px;
+        font-size: 14px;
+      }
+
+      .toggle label {
+        width: 50px;
+        height: 26px;
+      }
+
+      .toggle label::after {
+        width: 22px;
+        height: 22px;
+        top: 2px;
+        left: 2px;
+      }
+
+      .toggle input:checked + label::after {
+        transform: translateX(24px);
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h3>Enter Password</h3>
-    <input 
-      type="password" 
-      id="passwordInput" 
-      placeholder="Password" 
-      inputmode="numeric" 
-      pattern="\d*" 
+    <input
+      type="password"
+      id="passwordInput"
+      placeholder="Password"
+      inputmode="numeric"
+      pattern="\d*"
     />
     <div class="error" id="errorMsg"></div>
 
     <a href="index.html">Home Page</a>
 
     <div class="box" id="secretBox">
-        
       <div class="mode-text" id="modeLabel">Mode: Manual</div>
       <div class="toggle">
-        <input type="checkbox" id="modeSwitch">
+        <input type="checkbox" id="modeSwitch" />
         <label for="modeSwitch"></label>
-
       </div>
 
       <div id="motorSection" class="motor-control">
         <div class="motor-toggle">
           <span>Motor 1</span>
           <div class="toggle">
-            <input type="checkbox" id="motor1">
+            <input type="checkbox" id="motor1" />
             <label for="motor1"></label>
           </div>
         </div>
         <div class="motor-toggle">
           <span>Motor 2</span>
           <div class="toggle">
-            <input type="checkbox" id="motor2">
+            <input type="checkbox" id="motor2" />
             <label for="motor2"></label>
           </div>
         </div>
         <div class="motor-toggle">
           <span>Motor 3</span>
           <div class="toggle">
-            <input type="checkbox" id="motor3">
+            <input type="checkbox" id="motor3" />
             <label for="motor3"></label>
           </div>
         </div>
         <div class="motor-toggle">
           <span>Motor 4</span>
           <div class="toggle">
-            <input type="checkbox" id="motor4">
+            <input type="checkbox" id="motor4" />
             <label for="motor4"></label>
           </div>
         </div>
@@ -212,92 +259,68 @@
     </div>
   </div>
 
-  
-<script>
-  const correctPassword = "12345";
-  const passwordInput = document.getElementById("passwordInput");
-  const secretBox = document.getElementById("secretBox");
-  const errorMsg = document.getElementById("errorMsg");
-  const modeSwitch = document.getElementById("modeSwitch");
-  const modeLabel = document.getElementById("modeLabel");
-  const motorSection = document.getElementById("motorSection");
+  <script>
+    const correctPassword = "12345";
+    const passwordInput = document.getElementById("passwordInput");
+    const secretBox = document.getElementById("secretBox");
+    const errorMsg = document.getElementById("errorMsg");
+    const modeSwitch = document.getElementById("modeSwitch");
+    const modeLabel = document.getElementById("modeLabel");
+    const motorSection = document.getElementById("motorSection");
 
-  let attempts = 0;
-  let locked = false;
-  let on_data = 1; // default to Auto (1 = Auto, 0 = Manual)
+    let attempts = 0;
+    let locked = false;
+    let on_data = 1; // default to Auto (1 = Auto, 0 = Manual)
 
-  // Function to update toggle switch based on on_data variable
-  function updateToggleFromVariable() {
-
-    if (on_data === 0) {
-      modeSwitch.checked = true;   // Auto mode ON
-    } else {
-      modeSwitch.checked = false;  // Manual mode ON
-    }
-    updateModeDisplay();
-
-
-  }
-
-  // Update display and motor section visibility based on toggle state
-  function updateModeDisplay() {
-    const isManual = !modeSwitch.checked; // checked = Auto, unchecked = Manual
-    modeLabel.textContent = `Mode: ${isManual ? "Manual" : "Auto"}`;
-    motorSection.style.display = isManual ? "block" : "none";
-  }
-
-
-
-
-
-  
-
-  // Password enter logic
-  passwordInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && !locked) {
-      const input = passwordInput.value;
-      if (input === correctPassword) {
-        secretBox.classList.add("visible");
-        errorMsg.textContent = "";
-        updateToggleFromVariable(); // Make sure toggle matches variable on login
+    function updateToggleFromVariable() {
+      if (on_data === 0) {
+        modeSwitch.checked = true; // Auto mode ON
       } else {
-        attempts++;
-        errorMsg.textContent = `Incorrect password (${attempts}/3)`;
-        if (attempts >= 3) {
-          locked = true;
-          errorMsg.textContent = "Too many attempts. Try again in 30s.";
-          passwordInput.disabled = true;
-          setTimeout(() => {
-            passwordInput.disabled = false;
-            errorMsg.textContent = "";
-            attempts = 0;
-            locked = false;
-          }, 30000);
+        modeSwitch.checked = false; // Manual mode ON
+      }
+      updateModeDisplay();
+    }
+
+    function updateModeDisplay() {
+      const isManual = !modeSwitch.checked; // checked = Auto, unchecked = Manual
+      modeLabel.textContent = `Mode: ${isManual ? "Manual" : "Auto"}`;
+      motorSection.style.display = isManual ? "block" : "none";
+    }
+
+    passwordInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !locked) {
+        const input = passwordInput.value;
+        if (input === correctPassword) {
+          secretBox.classList.add("visible");
+          errorMsg.textContent = "";
+          updateToggleFromVariable();
+        } else {
+          attempts++;
+          errorMsg.textContent = `Incorrect password (${attempts}/3)`;
+          if (attempts >= 3) {
+            locked = true;
+            errorMsg.textContent = "Too many attempts. Try again in 30s.";
+            passwordInput.disabled = true;
+            setTimeout(() => {
+              passwordInput.disabled = false;
+              errorMsg.textContent = "";
+              attempts = 0;
+              locked = false;
+            }, 30000);
+          }
         }
       }
-    }
-  });
+    });
 
-  // Toggle change updates the on_data variable and UI
-  modeSwitch.addEventListener("change", () => {
-    on_data = modeSwitch.checked ? 1 : 0;
-    updateModeDisplay();
-    console.log("on_data =", on_data);
-  });
+    modeSwitch.addEventListener("change", () => {
+      on_data = modeSwitch.checked ? 1 : 0;
+      updateModeDisplay();
+      console.log("on_data =", on_data);
+    });
 
-  // On page load, initialize toggle and display
-  window.onload = () => {
-    updateToggleFromVariable();
-  };
-</script>
-
-
-
-
-
-
-
-
-
+    window.onload = () => {
+      updateToggleFromVariable();
+    };
+  </script>
 </body>
 </html>
