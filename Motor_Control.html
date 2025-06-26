@@ -269,9 +269,9 @@
 
      <div id="data-container">
 
-       <h3 id="last-updated" class="timestamp">Last updated: Loading...</h3>
-        <h3 id="No_Power_BATTRY">Loading...</h3>
-         <h3 id="No_Power_CEB">Loading...</h3>
+      
+        <h3 id="Firebase_Read_Data">Loading...</h3>
+         <h3 id="Motor_Status">Loading...</h3>
 
      </div>
      
@@ -295,7 +295,7 @@
 
     <div class="error" id="errorMsg"></div>
 
-    <h3 id="Test">Loading...</h3>
+    <h3 id="Click_Data">Data</h3>
 
     <div class="box" id="secretBox">
       <div class="mode-text" id="modeLabel">Mode: Manual</div>
@@ -397,8 +397,8 @@
       .then(response => response.json())
       .then(data => {
         const onOffMotorValue = data;
-        document.getElementById('No_Power_BATTRY').innerHTML =
-          `24V Battery : <span style="color: indigo;">${onOffMotorValue}</span>`;
+        document.getElementById('Firebase_Read_Data').innerHTML =
+          `Fire Base : <span style="color: indigo;">${onOffMotorValue}</span>`;
 
         const firstDigit = parseInt(onOffMotorValue.toString()[0]);
 
@@ -408,12 +408,12 @@
 
           if (firstDigit === 1) {
             modeSwitch.checked = true; // AUTO
-            document.getElementById('No_Power_CEB').innerHTML =
-              `CEB : <span style="color: green;">AUTO (1)</span>`;
+            document.getElementById('Motor_Status').innerHTML =
+              `Status : <span style="color: green;">AUTO </span>`;
           } else {
             modeSwitch.checked = false; // MANUAL
-            document.getElementById('No_Power_CEB').innerHTML =
-              `CEB : <span style="color: red;">MANUAL (${firstDigit})</span>`;
+            document.getElementById('Motor_Status').innerHTML =
+              `Status : <span style="color: red;">MANUAL </span>`;
           }
 
           updateModeDisplay();
@@ -425,7 +425,7 @@
   }
 
   // 🔁 Auto-read every 2s
-  setInterval(readFromFirebase, 200);
+  setInterval(readFromFirebase, 300);
 
   // 🟢 Initial load
   window.onload = () => {
@@ -582,7 +582,7 @@
     updateModeDisplay();   
 
     const valueToSend = on_data === 1 ?  parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -602,7 +602,7 @@
     updateModeDisplay();
 
     const valueToSend = motor1_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -624,7 +624,7 @@
     updateModeDisplay();
 
     const valueToSend = motor2_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -644,7 +644,7 @@
     updateModeDisplay();
 
     const valueToSend = motor3_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -665,7 +665,7 @@
     updateModeDisplay();
 
     const valueToSend = motor4_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
