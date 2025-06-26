@@ -269,7 +269,9 @@
 
      <div id="data-container">
 
-      
+       <h3 id="last-updated" class="timestamp">Last updated: Loading...</h3>
+        <h3 id="No_Power_BATTRY">Loading...</h3>
+         <h3 id="No_Power_CEB">Loading...</h3>
 
      </div>
      
@@ -293,7 +295,7 @@
 
     <div class="error" id="errorMsg"></div>
 
-    <h3 id="Test"></h3>
+    <h3 id="Test">Loading...</h3>
 
     <div class="box" id="secretBox">
       <div class="mode-text" id="modeLabel">Mode: Manual</div>
@@ -342,7 +344,7 @@
   <script>
 
 
-  let on_data = 1; // 0 = Auto, 1 = Manual
+  let on_data = 0; // 0 = Auto, 1 = Manual
   let motor1_state = 0;
   let motor2_state = 0;
   let motor3_state = 0;
@@ -350,7 +352,7 @@
 
   let inter_Lock = 0;
 
-    const correctPassword = "";
+  const correctPassword = "";
   const passwordInput = document.getElementById("passwordInput");
   const loginBtn = document.getElementById("loginBtn");
   const secretBox = document.getElementById("secretBox");
@@ -370,55 +372,69 @@
  // Read Firebase
 
       
-const FIREBASE_HOST = "https://uditha-2fc62-default-rtdb.asia-southeast1.firebasedatabase.app";
-const FIREBASE_AUTH = "0PfE9nU0OvR4CnRhVWMaQPFnSupj63CIGggX6bKU";
-
-function readFromFirebase() {
-  const url = `${FIREBASE_HOST}/on_off_motor.json?auth=${FIREBASE_AUTH}`;
-
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      let onOffMotorValue = data;
-
-      // Show value in No_Power_BATTRY
-    //  document.getElementById('No_Power_BATTRY').innerHTML =
-      //  `24V Battery : <span style="color: indigo;">${onOffMotorValue}</span>`;
-
-      // ✅ Get first digit
-      let firstDigit = parseInt(onOffMotorValue.toString()[0]);
 
 
 
-      // ✅ IF condition and display in No_Power_CEB
-      if (firstDigit === 1 ) {
+  const FIREBASE_HOST = "https://uditha-2fc62-default-rtdb.asia-southeast1.firebasedatabase.app";
+  const FIREBASE_AUTH = "0PfE9nU0OvR4CnRhVWMaQPFnSupj63CIGggX6bKU";
 
-       // document.getElementById('No_Power_CEB').innerHTML =
-         // `24V Battery : <span style="color: indigo;">${firstDigit}</span>`;
+ // const modeSwitch = document.getElementById("modeSwitch");
+  //const modeLabel = document.getElementById("modeLabel");
 
-            on_data = 0;
-            modeSwitch.checked = 1;
-            updateModeDisplay();
+  let currentFirstDigit = null;
 
-      } else {
+  // ✅ Update Label Text
+  function updateModeDisplay() {
+    const isManual = !modeSwitch.checked;
+    modeLabel.textContent = `Mode: ${isManual ? "Manual" : "Auto"}`;
+  }
 
-       // document.getElementById('No_Power_CEB').innerHTML =
-         // `24V Battery : <span style="color: red;">Other: ${firstDigit}</span>`;
+  // ✅ Read from Firebase and update switch
+  function readFromFirebase() {
+    const url = `${FIREBASE_HOST}/on_off_motor.json?auth=${FIREBASE_AUTH}`;
 
-           on_data = 1;
-           modeSwitch.checked = 0;
-           updateModeDisplay();
-      }
-    })
-    .catch(error => {
-      console.error("❌ Error reading Firebase:", error);
-    });
-}
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const onOffMotorValue = data;
+        document.getElementById('No_Power_BATTRY').innerHTML =
+          `24V Battery : <span style="color: indigo;">${onOffMotorValue}</span>`;
 
-     // 🔁 Call every 2 seconds
-    setInterval(readFromFirebase, 200);
+        const firstDigit = parseInt(onOffMotorValue.toString()[0]);
 
-  
+        // ✅ Only update switch if data changed
+        if (firstDigit !== currentFirstDigit) {
+          currentFirstDigit = firstDigit;
+
+          if (firstDigit === 1) {
+            modeSwitch.checked = true; // AUTO
+            document.getElementById('No_Power_CEB').innerHTML =
+              `CEB : <span style="color: green;">AUTO (1)</span>`;
+          } else {
+            modeSwitch.checked = false; // MANUAL
+            document.getElementById('No_Power_CEB').innerHTML =
+              `CEB : <span style="color: red;">MANUAL (${firstDigit})</span>`;
+          }
+
+          updateModeDisplay();
+        }
+      })
+      .catch(error => {
+        console.error("❌ Firebase read error:", error);
+      });
+  }
+
+  // 🔁 Auto-read every 2s
+  setInterval(readFromFirebase, 200);
+
+  // 🟢 Initial load
+  window.onload = () => {
+    readFromFirebase();
+    updateModeDisplay();
+  };
+
+
+
 
 
 
@@ -451,15 +467,10 @@ function readFromFirebase() {
 
 
 
- 
-
-
- 
-
 
   function updateToggleFromVariable() {
 
-    modeSwitch.checked = on_data === 0;  //// Togal eka on off kirima coding walin Click
+   // modeSwitch.checked = on_data === 0;  //// Togal eka on off kirima coding walin Click
    // motor1Toggle.checked = 0; 
 
     updateModeDisplay();
@@ -571,7 +582,7 @@ function readFromFirebase() {
     updateModeDisplay();   
 
     const valueToSend = on_data === 1 ?  parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-   // document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -591,7 +602,7 @@ function readFromFirebase() {
     updateModeDisplay();
 
     const valueToSend = motor1_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-  //  document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`; // display
+    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -613,7 +624,7 @@ function readFromFirebase() {
     updateModeDisplay();
 
     const valueToSend = motor2_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-   // document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -633,7 +644,7 @@ function readFromFirebase() {
     updateModeDisplay();
 
     const valueToSend = motor3_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-   // document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -654,7 +665,7 @@ function readFromFirebase() {
     updateModeDisplay();
 
     const valueToSend = motor4_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-   // document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
+    document.getElementById("Test").innerHTML = `Pump Unit : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -695,6 +706,11 @@ function readFromFirebase() {
 
 
 </script>
+
+
+
+
+
 
 
 
