@@ -261,6 +261,7 @@
   </style>
 </head>
 <body>
+
   <div class="container">
 
     <h2>Enter Password</h2>
@@ -269,9 +270,13 @@
 
      <div id="data-container">
 
-      
-        <h3 id="Firebase_Read_Data">Loading...</h3>
+      <!--  <h3 id="Firebase_Read_Data">Loading...</h3> -->
+
+       
+
          <h3 id="Motor_Status">Loading...</h3>
+         <h3 id="Motor_display_FireBase">Loading...</h3>
+        
 
      </div>
      
@@ -295,7 +300,9 @@
 
     <div class="error" id="errorMsg"></div>
 
-    <h3 id="Click_Data">Data</h3>
+    <!-- <h3 id="Click_Data">Data</h3> -->
+
+    
 
     <div class="box" id="secretBox">
       <div class="mode-text" id="modeLabel">Mode: Manual</div>
@@ -366,6 +373,10 @@
   const motor3Toggle = document.getElementById("motor3");
   const motor4Toggle = document.getElementById("motor4");
 
+         let m1_on_off = "ON";
+         let m2_on_off = "ON";
+         let m3_on_off = "ON";
+         let m4_on_off = "ON";
 
 
 
@@ -383,6 +394,8 @@
 
   let currentFirstDigit = null;
 
+
+
   // ✅ Update Label Text
   function updateModeDisplay() {
     const isManual = !modeSwitch.checked;
@@ -397,35 +410,148 @@
       .then(response => response.json())
       .then(data => {
         const onOffMotorValue = data;
-        document.getElementById('Firebase_Read_Data').innerHTML =
-          `Fire Base : <span style="color: indigo;">${onOffMotorValue}</span>`;
 
-        const firstDigit = parseInt(onOffMotorValue.toString()[0]);
+     
+       
+        //document.getElementById('Firebase_Read_Data').innerHTML =
+        //  `Fire Base : <span style="color: indigo;">${onOffMotorValue}</span>`;
+
+
+
+
+
+        const firstDigit = parseInt(onOffMotorValue.toString()[0]); /// firebase read data
+
+      
+
 
         // ✅ Only update switch if data changed
         if (firstDigit !== currentFirstDigit) {
           currentFirstDigit = firstDigit;
 
           if (firstDigit === 1) {
+            
             modeSwitch.checked = true; // AUTO
             document.getElementById('Motor_Status').innerHTML =
               `Status : <span style="color: green;">AUTO </span>`;
+
+
+             
+                              
+
           } else {
+
             modeSwitch.checked = false; // MANUAL
             document.getElementById('Motor_Status').innerHTML =
               `Status : <span style="color: red;">MANUAL </span>`;
+             
+             
           }
 
           updateModeDisplay();
+
         }
+
+           
+
+  {//################################################################################## Motor data display Firebase
+
+      let text_1 = "ON"; // manual on kirima
+      let text_2 = "OFF"; // manual on kirima
+
+       let Motor_Data_1 = data.toString()[1]; // පළවෙනි character එක
+       let Motor_Data_2 = data.toString()[2]; // පළවෙනි character එක
+       let Motor_Data_3 = data.toString()[3]; // පළවෙනි character එක
+       let Motor_Data_4 = data.toString()[4]; // පළවෙනි character එක
+
+       let Motor_1_Firebase_read_Candition = " ? ";
+       let Motor_2_Firebase_read_Candition = " ? ";
+       let Motor_3_Firebase_read_Candition = " ? ";
+       let Motor_4_Firebase_read_Candition = " ? ";
+
+            if (Motor_Data_1 === '2') { ///////////////////////////////////////
+ 
+                 Motor_1_Firebase_read_Candition = text_1;
+                 motor1Toggle.checked = 1; 
+                 
+
+            } else {
+
+                 Motor_1_Firebase_read_Candition = text_2;
+                 motor1Toggle.checked = 0; 
+               
+
+                }
+
+
+
+             if (Motor_Data_2 === '2') { ///////////////////////////////////////
+ 
+                 Motor_2_Firebase_read_Candition = text_1;
+                 motor2Toggle.checked = 1; 
+
+            } else {
+
+                 Motor_2_Firebase_read_Candition = text_2;
+                 motor2Toggle.checked = 0; 
+
+                }
+
+
+
+             if (Motor_Data_3 === '2') { ///////////////////////////////////////
+ 
+                 Motor_3_Firebase_read_Candition = text_1;
+                 motor3Toggle.checked = 1; 
+
+            } else {
+
+                 Motor_3_Firebase_read_Candition = text_2;
+                 motor3Toggle.checked = 0; 
+
+                }
+
+
+            if (Motor_Data_4 === '2') { ///////////////////////////////////////
+ 
+                 Motor_4_Firebase_read_Candition = text_1;
+                 motor4Toggle.checked = 1; 
+
+            } else {
+
+                 Motor_4_Firebase_read_Candition = text_2;
+                 motor4Toggle.checked = 0; 
+
+                }
+
+
+
+
+                    document.getElementById('Motor_display_FireBase').innerHTML = 
+                    `Motor Manual : 
+                    <span style="color: blue;"> ${Motor_1_Firebase_read_Candition} </span> | 
+                    <span style="color: blue;"> ${Motor_2_Firebase_read_Candition} </span> | 
+                    <span style="color: blue;"> ${Motor_3_Firebase_read_Candition} </span> |
+                    <span style="color: blue;"> ${Motor_4_Firebase_read_Candition} </span>`; 
+
+
+
+  }//################################################################################# Motor data display Firebase End
+
+
+
+
+
       })
       .catch(error => {
         console.error("❌ Firebase read error:", error);
       });
+
+
   }
 
   // 🔁 Auto-read every 2s
-  setInterval(readFromFirebase, 300);
+  setInterval(readFromFirebase, 3000);
 
   // 🟢 Initial load
   window.onload = () => {
@@ -439,9 +565,6 @@
 
 
  // end 
-
-
-
 
 
 
@@ -493,7 +616,6 @@
 
 
 
-
   function tryLogin() {
     if (locked) return;
 
@@ -524,6 +646,7 @@
   passwordInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       tryLogin();
+
     }
   });
 
@@ -548,6 +671,13 @@
       M4 = "1"
       M4 = "1"
       M4 = "1" 
+
+       motor1Toggle.checked = false; //togal sw coding off
+       motor2Toggle.checked = false; 
+       motor3Toggle.checked = false; 
+       motor4Toggle.checked = false;
+      
+ 
       
     
     } 
@@ -568,10 +698,13 @@
        M4 = "1"
        M4 = "1"
        M4 = "1" 
-       motor1Toggle.checked = 0; //togal sw coding off
-       motor2Toggle.checked = 0; 
-       motor3Toggle.checked = 0; 
-       motor4Toggle.checked = 0;      
+
+     //  motor1Toggle.checked = false; //togal sw coding off
+     //  motor2Toggle.checked = false; 
+     //  motor3Toggle.checked = false; 
+     //  motor4Toggle.checked = false;
+
+   
           
     } 
 
@@ -582,7 +715,7 @@
     updateModeDisplay();   
 
     const valueToSend = on_data === 1 ?  parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
+   // document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -592,17 +725,25 @@
 
 
 
+
   motor1Toggle.addEventListener("change", () => { /// Motor 1 togal send firebase
 
     motor1_state = motor1Toggle.checked ? 1 : 0;
 
      if(motor1_state === 0){ M1 = "1"; } 
-     if(motor1_state === 1){ M1 = "2"; } 
+     
+     if(motor1_state === 1){ 
+      
+      M1 = "2";
+      A_M = "2";
+    
+    } 
+
 
     updateModeDisplay();
 
     const valueToSend = motor1_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
+   // document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -619,12 +760,17 @@
     motor2_state = motor2Toggle.checked ? 1 : 0;
 
      if(motor2_state === 0){ M2 = "1"; } 
-     if(motor2_state === 1){ M2 = "2"; } 
+     if(motor2_state === 1){ 
+      
+      M2 = "2"; 
+      A_M = "2";
+    
+    } 
 
     updateModeDisplay();
 
     const valueToSend = motor2_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
+   // document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -639,12 +785,17 @@
     motor3_state = motor3Toggle.checked ? 1 : 0;
 
      if(motor3_state === 0){ M3 = "1"; } 
-     if(motor3_state === 1){ M3 = "2"; } 
+     if(motor3_state === 1){ 
+      
+      M3 = "2"; 
+      A_M = "2";
+    
+    } 
 
     updateModeDisplay();
 
     const valueToSend = motor3_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
+    //document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
@@ -655,23 +806,30 @@
 
 
 
-    motor4Toggle.addEventListener("change", () => { /// Motor 3 togal send firebase
+    motor4Toggle.addEventListener("change", () => { /// Motor 4 togal send firebase
 
     motor4_state = motor4Toggle.checked ? 1 : 0;
 
      if(motor4_state === 0){ M4 = "1"; } 
-     if(motor4_state === 1){ M4 = "2"; } 
+     if(motor4_state === 1){ 
+      
+      M4 = "2";
+      A_M = "2";
+    
+    } 
+
 
     updateModeDisplay();
 
     const valueToSend = motor4_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
-    document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
+   // document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
 
 
 
   });
+
 
 
 
@@ -699,6 +857,9 @@
   window.onload = () => {
     updateToggleFromVariable();
   };
+
+
+
 
 
 
