@@ -473,7 +473,9 @@
         let Pump_Motor_2_On_Canditon = 0;
         let Pump_Motor_3_On_Canditon = 0;        
         let Pump_Motor_4_On_Canditon = 0;
-        let Pump_House_CEB_Power = 0;
+        let Pump_Motor_1_Trip = 0;
+        let Pump_House_CEB_Power = "No Power";
+        let Pump_House_CEB_Power_Colour = "red";
 
 
   
@@ -567,7 +569,9 @@
             if (key === "P_Input_01") {//################################## Pump House data line 01 Read Firebase
 
 
-                if(String(value).charAt(0) === '1') { //// read Arry data Location
+             //******************************************************************************** Pump Candition
+
+                if(String(value).charAt(0) === '1') { //// read Arry 0 data Location
 
                      Pump_conn_arry_1_Data_0 = 1;
                      updateMotor02Status();
@@ -578,13 +582,30 @@
                      updateMotor02Status();
 
 
-                } //// read Arry data Location End
+                } //// read Arry 0 data Location End
 
 
-             //********************************************************************************
+              if(String(value).charAt(5) === '1') { //// read Arry data 5 Location No CEB  / ok CEB Motor
+
+                     Pump_House_CEB_Power = " | Power Off";
+                     Pump_House_CEB_Power_Colour = "red";
+                     updateMotor02Status();
+
+                 }else{
+
+                     Pump_House_CEB_Power = " | Power On";
+                     Pump_House_CEB_Power_Colour = "green";
+                     updateMotor02Status();
 
 
-                if(String(value).charAt(1) === '1') { //// read Arry data 1 Location
+                } //// read Arry data 5 Location No CEB  / ok CEB Motor End
+
+                
+
+             //******************************************************************************** Motor 1 
+
+
+                if(String(value).charAt(1) === '1') { //// read Arry data 1 Location Run Stop Motor
 
                      Pump_Motor_1_On_Canditon = 1;
                      updateMotor02Status();
@@ -595,10 +616,11 @@
                      updateMotor02Status();
 
 
-                } //// read Arry data 1 Location End
+                } //// read Arry data 1 Location Run Stop Motor End
+
 
                 
-              //********************************************************************************
+              //******************************************************************************** Motor 2
 
 
                 if(String(value).charAt(2) === '1') { //// read Arry data 2 Location
@@ -615,7 +637,7 @@
                 } //// read Arry data 2 Location End
 
                 
-              //********************************************************************************
+              //******************************************************************************** Motor 3
 
 
                 if(String(value).charAt(3) === '1') { //// read Arry data 3 Location
@@ -632,7 +654,7 @@
                 } //// read Arry data 3 Location End
 
                 
-              //********************************************************************************
+              //******************************************************************************** Motor 4
 
 
                 if(String(value).charAt(4) === '1') { //// read Arry data 4 Location
@@ -648,14 +670,12 @@
 
                 } //// read Arry data 4 Location End
 
-                
-              //********************************************************************************
 
 
               //******************************************************************************** Motor 01 Auto Manual
 
 
-                if(String(value).charAt(5) === '1') { //// read Arry data 5 Location
+                if(String(value).charAt(6) === '1') { //// read Arry data 5 Location
 
                      Motor_Auto_Manual = 1; // Motor 01 Auto
                      updateMotor02Status();
@@ -807,8 +827,8 @@ function updateMotor02Status() {
 
 
 
-     ///////////////////////############################## Err Conn Side and Display 
-     ///////////////////////############################## Err Conn Side and Display
+     ///////////////////////############################## System Stating and Display 
+     ///////////////////////############################## System Stating and Display
          
      if(time_pump_conn_count >= 100){ ///// Loding Time ( System Stating)
 
@@ -839,13 +859,16 @@ function updateMotor02Status() {
 
              
 
-             }else{ //########################################################## PUMP Online 
+             }else{ //########################################################## PUMP Online  
 
 
-              document.getElementById('Pump_Conn').innerHTML = 
-             `Pump Unit : <span style="color: green;">${"Online"}</span>`;
+             document.getElementById('Pump_Conn').innerHTML = 
+            `Pump Unit : 
+             <span style="color: ${"green"};"> ${"Online"} </span>  
+             <span style="color: ${Pump_House_CEB_Power_Colour};"> ${Pump_House_CEB_Power} </span>`; // ########## Online
 
-              Pump_Side_Conn_Bit = 1; // Online
+
+             Pump_Side_Conn_Bit = 1; // Online
             
 
              if(User_Input_Pump_Control_ByPass_System === 1){ // User_Input_Pump_Control_ByPass_System 
@@ -861,17 +884,23 @@ function updateMotor02Status() {
              } //User_Input_Pump_Control_ByPass_System End
 
 
-            //******************************************************************************* Pump Display
+            //******************************************************************************* Pump 1 Display
 
                 if(Pump_Motor_1_On_Canditon == 2){ // Pump_1 Display
 
-                     document.getElementById('Motor_01').innerHTML = 
-                    `Motor 01 : <span style="color: green;">${"Running..."}</span>`;   
-                    
-                    }else{
 
-                    document.getElementById('Motor_01').innerHTML = 
-                    `Motor 01 : <span style="color: blue;">${"Stop"}</span>`;                        
+                      document.getElementById('Motor_01').innerHTML = 
+                      `Motor 01 : 
+                      <span style="color: ${"green"};"> ${"Running..."} </span>  
+                      <span style="color: ${"green"};"> ${""} </span>`;
+
+                    
+                    }else{ 
+
+                      document.getElementById('Motor_02').innerHTML = 
+                      `Motor 02 : 
+                      <span style="color: ${"blue"};"> ${"Stop"} </span>  
+                      <span style="color: ${"red"};"> ${""} </span>`;                     
 
 
                  } // Pump_1 Display End
@@ -1130,7 +1159,7 @@ function updateMotor02Status() {
 
                     Tank_Conn_Bit = 0;
                     document.getElementById('Tank_Conn').innerHTML = 
-                    `Stock Tank Unit : <span style="color: red;">${"ERROR"}</span>`;
+                    `Stock Tank Unit : <span style="color: red;">${"Offline"}</span>`;
 
                     let tankElement = document.getElementById('Tank_01');
                     tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
