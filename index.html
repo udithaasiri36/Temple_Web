@@ -423,7 +423,7 @@
 
                     <h3 id="System_Control">System Control</h3>
 
-                    <h3 id="last-updated" class="timestamp">Last updated: Loading...</h3>
+                  <!--  <h3 id="last-updated" class="timestamp">Last updated: Loading...</h3> -->
                  
                 </div>
                 
@@ -441,14 +441,44 @@
         </div>
     </div>
 
+
+
+
+
+
+
     <script>
+
+        let PH_COM_0_Count = 0;
+        let PH_COM_1_Count = 0;
+
+
+        let Stating_Delay_Time = 0;
+        let Tank_Err_Count_Up = 0;
+        let Tank_Err_Count_Down = 0;
+        let Tank_Conn_Bit = 99;
+        let Battry_Cut_Bit = 0;
+        let CEB_Cut_Bit = 0;
+
+        
+        let Pump_conn_arry_1_Data_0 = 0;
+        let Pump_conn_arry_2_Data_0 = 0;
+
+        let Pump_conn_arry_1_Data_Count_Line_1_Up = 0;
+        let Pump_conn_arry_1_Data_Count_Line_1_Down = 0;
+        let Pump_conn_arry_2_Data_Count_Line_1_Up = 0;
+        let Pump_conn_arry_2_Data_Count_Line_1_Down = 0;
+
+        let time_pump_conn_count = 0;
+        let Pump_Side_Conn_Bit = 0;
+
+
+
+
         // 🔐 Firebase database configuration
         const FIREBASE_HOST = "https://uditha-2fc62-default-rtdb.asia-southeast1.firebasedatabase.app";
         const FIREBASE_AUTH = "0PfE9nU0OvR4CnRhVWMaQPFnSupj63CIGggX6bKU";
-        
-        let PH_COM_0_Count = 0;
-        let PH_COM_1_Count = 0;
-        
+              
         // 📥 Fetch data from Firebase
         async function fetchData() {
             try {
@@ -462,30 +492,299 @@
                         `Last updated: ${now.toLocaleTimeString()}`;
                 }
             } catch (error) {
-                console.error('Error fetching data:', error);
-                document.getElementById('data-container').innerHTML = 
-                    '<p>Error loading data. Please try again.</p>';
+               
+                 //  console.error('Error fetching data:', error);
+                 //  document.getElementById('data-container').innerHTML = 
+                 //  '<p>Error loading data. Please try again.</p>';
             }
         }
         
         // 🖥️ Display data in UI
         function displayData(data) {
+            
             const container = document.getElementById('data-container');
             container.innerHTML = '';
-            createDataItem(container, "Tank", data['Tank']);
+
+            createDataItem(container, "Tank", data['Tank']); // Firebase Read Names
+            createDataItem_2(container, "on_off_motor", data['on_off_motor']); // Firebase Read Names
+            createDataItem_3(container, "P_Input_01", data['P_Input_01']); // Firebase Read Names Pump House Data Line 01
+            createDataItem_4(container, "P_Input_02", data['P_Input_02']); // Firebase Read Names Pump House Data Line 02
+
+
         }
 
-        let Stating_Delay_Time = 0;
-        let Tank_Err_Count_Up = 0;
-        let Tank_Err_Count_Down = 0;
-        let Tank_Conn_Bit = 99;
-        let Battry_Cut_Bit = 0;
-        let CEB_Cut_Bit = 0;
+     
+
+
+
         
+
+
+//######################################################################################################## User Input Status Side
+
+        function createDataItem_2(container, key, value) { // Read Auto Manual User Input Status
+
+            if (key === "on_off_motor") {//################################## main data Read Firebase
+
+
+                if(String(value).charAt(0) === '1') { //// read Arry Location 
+
+                      document.getElementById('System_Control').innerHTML = 
+                     `System Control : <span style="color: green;">${"Auto"}</span>`; 
+
+                 }else{
+
+                      document.getElementById('System_Control').innerHTML = 
+                     `System Control : <span style="color: Blue;">${"Manual"}</span>`; 
+
+                } //// read Arry Location End
+
+
+            } ////######################################## main data Read Firebase End
+
+
+
+        } // Read Auto Manual User Input Status
+
+//######################################################################################### User Input Status Side End
+
+
+
+//################################################################################################# PUMP hOUSE Input Status Side 01
+
+        function createDataItem_3(container, key, value) { // Read PUMP House Input Line 01 Status
+
+            if (key === "P_Input_01") {//################################## Pump House data line 01 Read Firebase
+
+
+                if(String(value).charAt(0) === '1') { //// read Arry Location
+
+                    //  document.getElementById('Pump_Conn').innerHTML = 
+                    // `Pump House Unit : <span style="color: green;">${"ON"}</span>`; 
+                     Pump_conn_arry_1_Data_0 = 1;
+                     updateMotor02Status();
+
+
+                 }else{
+
+                   //   document.getElementById('Pump_Conn').innerHTML = 
+                   //  `Pump House Unit : <span style="color: Blue;">${"OFF"}</span>`; 
+                     Pump_conn_arry_1_Data_0 = 2;
+                     updateMotor02Status();
+
+
+                } //// read Arry Location End
+
+
+            } ////######################################## Pump House data line 01 Read Firebase End
+
+
+        } // Read PUMP House Input Line 01 Status End
+
+//######################################################################################### PUMP hOUSE Input Status Side 01 End
+
+
+
+
+                              
+
+//################################################################################################# PUMP hOUSE Input Status Side 02
+
+        function createDataItem_4(container, key, value) { // Read PUMP House Input Line 03 Status
+
+            if (key === "P_Input_02") {//################################## Pump House data line 03 Read Firebase
+
+
+                if(String(value).charAt(0) === '1') { //// read Arry Location
+
+                    //  document.getElementById('Motor_01').innerHTML = 
+                    //`Motor 01 : <span style="color: green;">${"ON"}</span>`; 
+                     Pump_conn_arry_2_Data_0 = 1;
+                     updateMotor02Status();
+
+                 }else{
+
+                    //  document.getElementById('Motor_01').innerHTML = 
+                    // `Motor 01 : <span style="color: Blue;">${"OFF"}</span>`; 
+                      Pump_conn_arry_2_Data_0 = 2;
+                      updateMotor02Status();
+
+                } //// read Arry Location End
+
+
+            } ////######################################## Pump House data line 03 Read Firebase End
+
+
+
+        } // Read PUMP House Input Line 03 Status
+
+//######################################################################################### PUMP hOUSE Input Status Side 03 End
+
+
+
+
+function updateMotor02Status() {
+    
+        //  document.getElementById('Motor_03').innerHTML = 
+        // `Motor 03 : <span style="color: Blue;">${Pump_conn_arry_1_Data_0}</span>`; 
+
+         // document.getElementById('Motor_04').innerHTML = 
+         //`Motor 04 : <span style="color: Blue;">${Pump_conn_arry_2_Data_0}</span>`; 
+
+
+         let Pumu_House_Conn_Time = 37;
+
+       
+         if(Pump_conn_arry_1_Data_0 === 2){ // Pump House Conn Up  Arry line 1
+
+            Pump_conn_arry_1_Data_Count_Line_1_Up++;
+            Pump_conn_arry_1_Data_Count_Line_1_Down = 0;
+
+         }
+
+         if(Pump_conn_arry_1_Data_Count_Line_1_Up >= 50){
+
+            Pump_conn_arry_1_Data_Count_Line_1_Up = 40;
+            
+
+         }
+
+
+        if(Pump_conn_arry_1_Data_0 === 1){ // Pump House Conn Down Arry line 1
+
+            Pump_conn_arry_1_Data_Count_Line_1_Down++;
+            Pump_conn_arry_1_Data_Count_Line_1_Up = 0;
+
+         }
+
+         if(Pump_conn_arry_1_Data_Count_Line_1_Down >= 50){
+
+            Pump_conn_arry_1_Data_Count_Line_1_Down = 40;
+            
+
+         }
+
+
+
+         if(Pump_conn_arry_1_Data_0 === 2){ // Pump House Conn Up  Arry line 2
+
+            Pump_conn_arry_2_Data_Count_Line_1_Up++;
+            Pump_conn_arry_2_Data_Count_Line_1_Down = 0;
+
+         }
+
+         if(Pump_conn_arry_2_Data_Count_Line_1_Up >= 50){
+
+            Pump_conn_arry_2_Data_Count_Line_1_Up = 40;
+            
+
+         }
+
+
+        if(Pump_conn_arry_2_Data_0 === 1){ // Pump House Conn Down Arry line 2
+
+            Pump_conn_arry_2_Data_Count_Line_1_Down++;
+            Pump_conn_arry_2_Data_Count_Line_1_Up = 0;
+
+         }
+
+         if(Pump_conn_arry_2_Data_Count_Line_1_Down >= 50){
+
+            Pump_conn_arry_2_Data_Count_Line_1_Down = 40;
+            
+
+         }
+
+
+         time_pump_conn_count++; /// loard Pump Conn Count
+
+         if(time_pump_conn_count >= 100){
+
+            time_pump_conn_count = 80;
+
+         }
+
+
+
+     ///////////////////////############################## Err Conn Side
+         
+     if(time_pump_conn_count >= 40){
+
+         if( Pump_conn_arry_1_Data_Count_Line_1_Up     >= Pumu_House_Conn_Time || 
+             Pump_conn_arry_1_Data_Count_Line_1_Down   >= Pumu_House_Conn_Time ||
+             Pump_conn_arry_2_Data_Count_Line_1_Up     >= Pumu_House_Conn_Time ||
+             Pump_conn_arry_2_Data_Count_Line_1_Down   >= Pumu_House_Conn_Time    ){
+
+
+              document.getElementById('Pump_Conn').innerHTML = 
+             `Pump Unit : <span style="color: Red;">${"Offline"}</span>`;
+
+             }else{
+
+              document.getElementById('Pump_Conn').innerHTML = 
+             `Pump Unit : <span style="color: green;">${"Online"}</span>`;
+
+
+         }
+
+            }else{
+
+              document.getElementById('Pump_Conn').innerHTML = 
+             `Pump Unit : <span style="color: blue;">${"Please wait..."}</span>`;
+
+       }
+
+     ///////////////////////############################## Err Conn Side End
+
+
+     
+
+
+
+             document.getElementById('Motor_01').innerHTML = 
+             `Motor_01 : <span style="color: green;">${Pump_conn_arry_1_Data_Count_Line_1_Up}</span>`;
+
+              document.getElementById('Motor_02').innerHTML = 
+             `Motor_02 : <span style="color: green;">${Pump_conn_arry_1_Data_Count_Line_1_Down}</span>`;
+
+              document.getElementById('Motor_03').innerHTML = 
+             `Motor_03 : <span style="color: green;">${Pump_conn_arry_2_Data_Count_Line_1_Up}</span>`;
+
+              document.getElementById('Motor_04').innerHTML = 
+             `Motor_03 : <span style="color: green;">${Pump_conn_arry_2_Data_Count_Line_1_Down}</span>`;
+
+
+}
+
+
+
+//########################################################################################## LOGIC Control PUMP House
+
+
+       
+
+
+
+
+
+
+
+
+///########################################################################################## LOGIC Control PUMP House END
+
+
+
+
+
+
+
+
+
         // 🏗️ Create data item helper function
-        function createDataItem(container, key, value) {
-            const itemDiv = document.createElement('div');
-            itemDiv.className = 'data-item';
+        function createDataItem(container, key, value) {/////////////################################## Read FireBase Tank Data
+
+           // const itemDiv = document.createElement('div');
+           // itemDiv.className = 'data-item';
              
             // Control logic
             Tank_Err_Count_Up++;
@@ -652,6 +951,10 @@
                     document.getElementById('Tank_Conn').innerHTML = 
                     `Stock Tank Unit : <span style="color: blue;">${"Please Wait..."}</span>`;
                 }
+
+
+
+
             }
 
 
@@ -671,10 +974,13 @@
                 const tank3Level = String(value).charAt(5);
                 updateTankLevel('Tank_03', tank3Level);
             }
-        }
+         }
 
-        // Helper function to update tank levels
-        function updateTankLevel(tankId, level) {
+
+
+
+             // Helper function to update tank levels
+         function updateTankLevel(tankId, level) {
             const tankElement = document.getElementById(tankId);
             
             switch(level) {
@@ -699,11 +1005,20 @@
                     tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
                     break;
             }
-        }
+         }
+
+
+
+
+
+
+
 
         // Initialize and set interval for data refresh
         document.addEventListener('DOMContentLoaded', fetchData);
-        setInterval(fetchData, 500);
+        setInterval(fetchData, 200);
+
+
     </script>
 </body>
 </html>
