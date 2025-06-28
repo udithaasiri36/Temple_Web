@@ -450,7 +450,7 @@
     <script>
 
 
-
+      /////////////////////////////////////////////////// Stroke Tank Veriyable
 
         let Stating_Delay_Time = 0;
         let Tank_Err_Count_Up = 0;
@@ -458,9 +458,15 @@
         let Tank_Conn_Bit = 99;
         let Battry_Cut_Bit = 0;
         let CEB_Cut_Bit = 0;
-        
+
+     //////////////////////////////////////////////////// User Manual Pumu Control Veriyable
+
+
         let User_Input_Pump_Control_ByPass_System = 0;
+
         
+    /////////////////////////////////////////////////// Stroke Tank Veriyable
+
         let Pump_conn_arry_1_Data_0 = 0;
         let Pump_conn_arry_2_Data_0 = 0;
         let Pump_conn_arry_1_Data_Count_Line_1_Up = 0;
@@ -469,16 +475,33 @@
         let Pump_conn_arry_2_Data_Count_Line_1_Down = 0;
         let time_pump_conn_count = 0;
         let Pump_Side_Conn_Bit = 0;
+
         let Pump_Motor_1_On_Canditon = 0;
         let Pump_Motor_2_On_Canditon = 0;
-        let Pump_Motor_3_On_Canditon = 0;        
+        let Pump_Motor_3_On_Canditon = 0; 
         let Pump_Motor_4_On_Canditon = 0;
-        let Pump_Motor_1_Trip = 0;
+
         let Pump_House_CEB_Power = "No Power";
         let Pump_House_CEB_Power_Colour = "red";
 
+        let Motor_1_Auto_Manual = 2;
+        let Motor_1_Auto_Manual_Colour = "blue";
+        let Motor_2_Auto_Manual = 2;
+        let Motor_2_Auto_Manual_Colour = "blue";
+        let Motor_3_Auto_Manual = 2;
+        let Motor_3_Auto_Manual_Colour = "blue";
+        let Motor_4_Auto_Manual = 2;
+        let Motor_4_Auto_Manual_Colour = "blue";
 
-  
+
+        let Motor_1_Trip = 2;
+        let Motor_2_Trip = 2;
+        let Motor_3_Trip = 2;
+        let Motor_4_Trip = 2;
+
+ 
+     //////////////////////////////////////////////////////////////////////////////////////////////// Read FireBase
+
 
 
         // 🔐 Firebase database configuration
@@ -677,12 +700,14 @@
 
                 if(String(value).charAt(6) === '1') { //// read Arry data 5 Location
 
-                     Motor_Auto_Manual = 1; // Motor 01 Auto
+                     Motor_1_Auto_Manual = "Auto"; // Motor 01 Auto
+                     Motor_1_Auto_Manual_Colour = "green"
                      updateMotor02Status();
 
                  }else{
 
-                     Motor_Auto_Manual = 2; // Motor 01 Manual
+                     Motor_1_Auto_Manual = "Manual"; // Motor 01 Manual
+                     Motor_1_Auto_Manual_Colour = "blue"
                      updateMotor02Status();
 
 
@@ -693,7 +718,160 @@
 
 
 
-              
+              //******************************************************************************** Motor 02 Auto Manual
+
+
+                if(String(value).charAt(7) === '1') { //// read Arry data 7 Location
+
+                     Motor_2_Auto_Manual = "Auto"; // Motor 02 Auto
+                     Motor_2_Auto_Manual_Colour = "green"
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_2_Auto_Manual = "Manual"; // Motor 02 Manual
+                     Motor_2_Auto_Manual_Colour = "blue"
+                     updateMotor02Status();
+
+
+                } //// read Arry data 7 Location End
+
+                
+              //******************************************************************************** Motor 02 Auto Manual End
+
+
+              //******************************************************************************** Motor 03 Auto Manual
+
+
+                if(String(value).charAt(8) === '1') { //// read Arry data 8 Location
+
+                     Motor_3_Auto_Manual = "Auto"; // Motor 03 Auto
+                     Motor_3_Auto_Manual_Colour = "green"
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_3_Auto_Manual = "Manual"; // Motor 03 Manual
+                     Motor_3_Auto_Manual_Colour = "blue"
+                     updateMotor02Status();
+
+
+                } //// read Arry data 8 Location End
+
+                
+              //******************************************************************************** Motor 03 Auto Manual End
+
+
+
+               //******************************************************************************** Motor 04 Auto Manual
+
+
+                if(String(value).charAt(9) === '1') { //// read Arry data 9 Location
+
+                     Motor_4_Auto_Manual = "Auto"; // Motor 04 Auto
+                     Motor_4_Auto_Manual_Colour = "green"
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_4_Auto_Manual = "Manual"; // Motor 04 Manual
+                     Motor_4_Auto_Manual_Colour = "blue"
+                     updateMotor02Status();
+
+
+                } //// read Arry data 9 Location End
+
+                
+              //******************************************************************************** Motor 04 Auto Manual End             
+
+
+
+ 
+               //******************************************************************************** Motor Motor_1_Trip
+
+
+                if(String(value).charAt(10) === '1') { //// read Arry data 10 Location
+
+                     Motor_1_Trip = 1; // Motor_1_Not_Trip
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_1_Trip = 2; // Motor_1_Trip
+                     updateMotor02Status();
+
+
+                } //// read Arry data 10 Location End
+
+                
+              //******************************************************************************** Motor Motor_1_Trip End 
+
+
+              //******************************************************************************** Motor Motor_2_Trip
+
+
+                if(String(value).charAt(11) === '1') { //// read Arry data 11 Location
+
+                     Motor_2_Trip = 1; // Motor_2_Not_Trip
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_2_Trip = 2; // Motor_2_Trip
+                     updateMotor02Status();
+
+
+                } //// read Arry data 11 Location End
+
+                
+              //******************************************************************************** Motor Motor_2_Trip End            
+
+
+
+              //******************************************************************************** Motor Motor_3_Trip
+
+
+                if(String(value).charAt(12) === '1') { //// read Arry data 12 Location
+
+                     Motor_3_Trip = 1; // Motor_3_Not_Trip
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_3_Trip = 2; // Motor_3_Trip
+                     updateMotor02Status();
+
+
+                } //// read Arry data 12 Location End
+
+                
+              //******************************************************************************** Motor Motor_3_Trip End   
+
+
+              //******************************************************************************** Motor Motor_4_Trip
+
+
+                if(String(value).charAt(13) === '1') { //// read Arry data 13 Location
+
+                     Motor_4_Trip = 1; // Motor_4_Not_Trip
+                     updateMotor02Status();
+
+                 }else{
+
+                     Motor_4_Trip = 2; // Motor_4_Trip
+                     updateMotor02Status();
+
+
+                } //// read Arry data 13 Location End
+
+                
+              //******************************************************************************** Motor Motor_4_Trip End 
+
+
+
+
+
+
 
 
             } ////######################################## Pump House data line 01 Read Firebase End
@@ -753,7 +931,7 @@ function updateMotor02Status() {
          //`Motor 04 : <span style="color: Blue;">${Pump_conn_arry_2_Data_0}</span>`; 
 
 
-         let Pumu_House_Conn_Time = 50;  /// System Stating Time
+         let Pumu_House_Conn_Time = 70;  /// System Stating Time
 
        
          if(Pump_conn_arry_1_Data_0 === 2){ // Pump House Conn Up  Arry line 1
@@ -886,74 +1064,136 @@ function updateMotor02Status() {
 
             //******************************************************************************* Pump 1 Display
 
+
+             if(Motor_1_Trip === 1){
+             
+
                 if(Pump_Motor_1_On_Canditon == 2){ // Pump_1 Display
 
 
                       document.getElementById('Motor_01').innerHTML = 
                       `Motor 01 : 
-                      <span style="color: ${"green"};"> ${"Running..."} </span>  
-                      <span style="color: ${"green"};"> ${""} </span>`;
+                      <span style="color: ${"green"};"> ${"Running..."} </span> |
+                      <span style="color: ${Motor_1_Auto_Manual_Colour};"> ${Motor_1_Auto_Manual} </span>`;
+
+                    
+                    }else{ 
+
+                      document.getElementById('Motor_01').innerHTML = 
+                      `Motor 01 : 
+                      <span style="color: ${"blue"};"> ${"Stop"} </span> |
+                      <span style="color: ${Motor_1_Auto_Manual_Colour};"> ${Motor_1_Auto_Manual} </span>`;                     
+
+
+                 } // Pump_1 Display End
+
+
+              }else{
+
+               
+                 document.getElementById('Motor_01').innerHTML = 
+                `Motor 01 : <span style="color: red;">${"Trip"}</span>`; 
+
+            }
+
+
+            //******************************************************************************* Pump 2 Display
+
+
+             if(Motor_2_Trip === 1){
+
+                if(Pump_Motor_2_On_Canditon == 2){ // Pump_2 Display
+
+                      document.getElementById('Motor_02').innerHTML = 
+                      `Motor 02 : 
+                      <span style="color: ${"green"};"> ${"Running..."} </span> |
+                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${Motor_2_Auto_Manual} </span>`;
 
                     
                     }else{ 
 
                       document.getElementById('Motor_02').innerHTML = 
                       `Motor 02 : 
-                      <span style="color: ${"blue"};"> ${"Stop"} </span>  
-                      <span style="color: ${"red"};"> ${""} </span>`;                     
-
-
-                 } // Pump_1 Display End
-
-
-            //*******************************************************************************
-
-
-                if(Pump_Motor_2_On_Canditon == 2){ // Pump_2 Display
-
-                     document.getElementById('Motor_02').innerHTML = 
-                    `Motor 02 : <span style="color: green;">${"Running..."}</span>`;   
-                    
-                    }else{
-
-                    document.getElementById('Motor_02').innerHTML = 
-                    `Motor 02 : <span style="color: blue;">${"Stop"}</span>`;                        
+                      <span style="color: ${"blue"};"> ${"Stop"} </span> |
+                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${Motor_2_Auto_Manual} </span>`;                      
 
 
                  } // Pump_2 Display End
 
 
+              }else{
+
+               
+                 document.getElementById('Motor_02').innerHTML = 
+                `Motor 02 : <span style="color: red;">${"Trip"}</span>`; 
+
+            }
+
+
+
              //*******************************************************************************
+
+            if(Motor_3_Trip === 1){            
                  
                 if(Pump_Motor_3_On_Canditon == 2){ // Pump_3 Display
 
-                     document.getElementById('Motor_03').innerHTML = 
-                    `Motor 03 : <span style="color: green;">${"Running..."}</span>`;   
-                    
-                    }else{
+                      document.getElementById('Motor_03').innerHTML = 
+                      `Motor 03 : 
+                      <span style="color: ${"green"};"> ${"Running..."} </span> |
+                      <span style="color: ${Motor_3_Auto_Manual_Colour};"> ${Motor_3_Auto_Manual} </span>`;
 
-                    document.getElementById('Motor_03').innerHTML = 
-                    `Motor 03 : <span style="color: blue;">${"Stop"}</span>`;                        
+                    
+                    }else{ 
+
+                      document.getElementById('Motor_03').innerHTML = 
+                      `Motor 03 : 
+                      <span style="color: ${"blue"};"> ${"Stop"} </span> |
+                      <span style="color: ${Motor_3_Auto_Manual_Colour};"> ${Motor_3_Auto_Manual} </span>`;                      
 
 
                  } // Pump_3 Display End
 
 
+                }else{
+
+               
+                 document.getElementById('Motor_03').innerHTML = 
+                `Motor 03 : <span style="color: red;">${"Trip"}</span>`; 
+
+            }
+
+
              //*******************************************************************************
 
+            if(Motor_4_Trip === 1){  
 
                 if(Pump_Motor_4_On_Canditon == 2){ // Pump_4 Display
 
-                     document.getElementById('Motor_04').innerHTML = 
-                    `Motor 04 : <span style="color: green;">${"Running..."}</span>`;   
-                    
-                    }else{
+                      document.getElementById('Motor_04').innerHTML = 
+                      `Motor 04 : 
+                      <span style="color: ${"green"};"> ${"Running..."} </span> |
+                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${Motor_4_Auto_Manual} </span>`;
 
-                    document.getElementById('Motor_04').innerHTML = 
-                    `Motor 04 : <span style="color: blue;">${"Stop"}</span>`;                        
+                    
+                    }else{ 
+
+                      document.getElementById('Motor_04').innerHTML = 
+                      `Motor 04 : 
+                      <span style="color: ${"blue"};"> ${"Stop"} </span> |
+                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${Motor_4_Auto_Manual} </span>`;                    
 
 
                  } // Pump_4 Display End
+
+                }else{
+
+               
+                 document.getElementById('Motor_04').innerHTML = 
+                `Motor 04 : <span style="color: red;">${"Trip"}</span>`; 
+
+            }
+
+
 
 
              //*******************************************************************************
@@ -1071,14 +1311,17 @@ function updateMotor02Status() {
 
                 if(Tank_Err_Count_Up <= 8 && Tank_Err_Count_Down <= 8 && Stating_Delay_Time >= 10 ) { // coon ok and battry Power and Ceb  Nam
 
-
+                  let Tank_Online_Status = "Online";
 
 
                   if(Battry_Cut_Bit == 1 && CEB_Cut_Bit == 0){ //// Battry Power Ok CEB NOT Ok nam
 
                       Tank_Conn_Bit = 1; 
-                      document.getElementById('Tank_Conn').innerHTML = 
-                     `Stock Tank Unit : <span style="color: green;">${"Battery Power Run"}</span>`;  
+ 
+                       document.getElementById('Tank_Conn').innerHTML = 
+                      `Stock Tank Unit : 
+                      <span style="color: ${"green"};"> ${Tank_Online_Status} </span> |
+                      <span style="color: ${"blue"};"> ${"Battery Power"} </span>`;
 
                   }//// Battry Power Ok CEB NOT Ok nam END
 
@@ -1088,7 +1331,7 @@ function updateMotor02Status() {
 
                       Tank_Conn_Bit = 1; 
                       document.getElementById('Tank_Conn').innerHTML = 
-                     `Stock Tank Unit : <span style="color: green;">${"Good"}</span>`;  
+                     `Stock Tank Unit : <span style="color: green;">${"Online"}</span>`;  
 
                   }//// Battry Power Ok CEB Ok nam END
 
@@ -1102,8 +1345,11 @@ function updateMotor02Status() {
 
                     Tank_Conn_Bit = 0; 
 
-                    document.getElementById('Tank_Conn').innerHTML = 
-                    `Stock Tank Unit : <span style="color: red;">${"CEB Ok | Battery Err"}</span>`;
+
+                       document.getElementById('Tank_Conn').innerHTML = 
+                      `Stock Tank Unit : 
+                      <span style="color: ${"green"};"> ${Tank_Online_Status} </span> |
+                      <span style="color: ${"red"};"> ${"24V Error"} </span>`;
 
                     let tankElement = document.getElementById('Tank_01');
                     tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
@@ -1127,8 +1373,11 @@ function updateMotor02Status() {
 
                     Tank_Conn_Bit = 0; 
 
-                    document.getElementById('Tank_Conn').innerHTML = 
-                    `Stock Tank Unit : <span style="color: red;">${"No Power"}</span>`;
+                       document.getElementById('Tank_Conn').innerHTML = 
+                      `Stock Tank Unit : 
+                      <span style="color: ${"green"};"> ${Tank_Online_Status} </span> |
+                      <span style="color: ${"red"};"> ${"No Power"} </span>`;
+                      
 
                     let tankElement = document.getElementById('Tank_01');
                     tankElement.style.background = "linear-gradient(to top, #f50535, #f50535, #f50535)";
