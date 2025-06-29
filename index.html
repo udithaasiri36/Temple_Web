@@ -421,6 +421,12 @@
                     <h3 id="Motor_03">Motor_03</h3>
                     <h3 id="Motor_04">Motor_04</h3>
 
+                   <!-- <h3 id="T1">T1</h3> -->
+                   <!-- <h3 id="T2">T2</h3> -->
+                   <!-- <h3 id="T3">T3</h3> -->
+                   <!-- <h3 id="T4">T4</h3> -->
+
+
                     <h3 id="System_Control">System Control</h3>
 
                   <!--  <h3 id="last-updated" class="timestamp">Last updated: Loading...</h3> -->
@@ -931,7 +937,7 @@ function updateMotor02Status() {
          //`Motor 04 : <span style="color: Blue;">${Pump_conn_arry_2_Data_0}</span>`; 
 
 
-         let Pumu_House_Conn_Time = 70;  /// System Stating Time
+         let Pumu_House_Conn_Time = 300;  /// System Stating Time
 
        
          if(Pump_conn_arry_1_Data_0 === 2){ // Pump House Conn Up  Arry line 1
@@ -941,9 +947,9 @@ function updateMotor02Status() {
 
          }
 
-         if(Pump_conn_arry_1_Data_Count_Line_1_Up >= 100){
+         if(Pump_conn_arry_1_Data_Count_Line_1_Up >= 500){
 
-            Pump_conn_arry_1_Data_Count_Line_1_Up = 60;
+            Pump_conn_arry_1_Data_Count_Line_1_Up = 400;
             
 
          }
@@ -956,9 +962,9 @@ function updateMotor02Status() {
 
          }
 
-         if(Pump_conn_arry_1_Data_Count_Line_1_Down >= 100){
+         if(Pump_conn_arry_1_Data_Count_Line_1_Down >= 500){
 
-            Pump_conn_arry_1_Data_Count_Line_1_Down = 60;
+            Pump_conn_arry_1_Data_Count_Line_1_Down = 400;
             
 
          }
@@ -972,9 +978,9 @@ function updateMotor02Status() {
 
          }
 
-         if(Pump_conn_arry_2_Data_Count_Line_1_Up >= 100){
+         if(Pump_conn_arry_2_Data_Count_Line_1_Up >= 500){
 
-            Pump_conn_arry_2_Data_Count_Line_1_Up = 80;
+            Pump_conn_arry_2_Data_Count_Line_1_Up = 400;
             
 
          }
@@ -987,9 +993,9 @@ function updateMotor02Status() {
 
          }
 
-         if(Pump_conn_arry_2_Data_Count_Line_1_Down >= 100){
+         if(Pump_conn_arry_2_Data_Count_Line_1_Down >= 500){
 
-            Pump_conn_arry_2_Data_Count_Line_1_Down = 80;
+            Pump_conn_arry_2_Data_Count_Line_1_Down = 400;
             
 
          }
@@ -1005,10 +1011,24 @@ function updateMotor02Status() {
 
 
 
+           //  document.getElementById('T1').innerHTML = 
+            // `T1 : <span style="color: Red;">${Pump_conn_arry_1_Data_Count_Line_1_Up}</span>`;
+
+            // document.getElementById('T2').innerHTML = 
+            // `T2 : <span style="color: Red;">${Pump_conn_arry_1_Data_Count_Line_1_Down}</span>`;
+
+            // document.getElementById('T3').innerHTML = 
+            // `T3 : <span style="color: Red;">${Pump_conn_arry_2_Data_Count_Line_1_Up}</span>`;  
+
+            // document.getElementById('T4').innerHTML = 
+            // `T4 : <span style="color: Red;">${Pump_conn_arry_2_Data_Count_Line_1_Down}</span>`;             
+
+
+
      ///////////////////////############################## System Stating and Display 
      ///////////////////////############################## System Stating and Display
          
-     if(time_pump_conn_count >= 100){ ///// Loding Time ( System Stating)
+     if(time_pump_conn_count >= 350){ ///// Loding Time ( System Stating)
 
          if( Pump_conn_arry_1_Data_Count_Line_1_Up     >= Pumu_House_Conn_Time || 
              Pump_conn_arry_1_Data_Count_Line_1_Down   >= Pumu_House_Conn_Time ||
@@ -1309,7 +1329,7 @@ function updateMotor02Status() {
                 if(Tank_Err_Count_Down > 20) { Tank_Err_Count_Down = 15; }
 
 
-                if(Tank_Err_Count_Up <= 8 && Tank_Err_Count_Down <= 8 && Stating_Delay_Time >= 10 ) { // coon ok and battry Power and Ceb  Nam
+                if(Tank_Err_Count_Up <= 11 && Tank_Err_Count_Down <= 11 && Stating_Delay_Time >= 13 ) { // coon ok and battry Power and Ceb  Nam
 
                   let Tank_Online_Status = "Online";
 
