@@ -439,7 +439,7 @@
                     <div class="button-group">
 
                         <a href="Pump_House.html" class="btn btn-primary btn-lg">Pump House</a>
-                        <a href="Stock_Tank.html" class="btn btn-primary btn-lg">Stock Tank</a>
+                      <!--  <a href="Stock_Tank.html" class="btn btn-primary btn-lg">Stock Tank</a> --> 
                                             
                    </div>
                </div>
@@ -1094,7 +1094,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_01').innerHTML = 
                       `Motor 01 : 
                       <span style="color: ${"green"};"> ${"Running..."} </span> |
-                      <span style="color: ${Motor_1_Auto_Manual_Colour};"> ${Motor_1_Auto_Manual} </span>`;
+                      <span style="color: ${Motor_1_Auto_Manual_Colour};"> ${""} </span>`; // Motor_1_Auto_Manual
 
                     
                     }else{ 
@@ -1102,7 +1102,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_01').innerHTML = 
                       `Motor 01 : 
                       <span style="color: ${"blue"};"> ${"Stop"} </span> |
-                      <span style="color: ${Motor_1_Auto_Manual_Colour};"> ${Motor_1_Auto_Manual} </span>`;                     
+                      <span style="color: ${Motor_1_Auto_Manual_Colour};"> ${""} </span>`;  // Motor_1_Auto_Manual                   
 
 
                  } // Pump_1 Display End
@@ -1127,7 +1127,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_02').innerHTML = 
                       `Motor 02 : 
                       <span style="color: ${"green"};"> ${"Running..."} </span> |
-                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${Motor_2_Auto_Manual} </span>`;
+                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${""} </span>`; // Motor_2_Auto_Manual
 
                     
                     }else{ 
@@ -1135,7 +1135,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_02').innerHTML = 
                       `Motor 02 : 
                       <span style="color: ${"blue"};"> ${"Stop"} </span> |
-                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${Motor_2_Auto_Manual} </span>`;                      
+                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${""} </span>`;  // Motor_2_Auto_Manual                    
 
 
                  } // Pump_2 Display End
@@ -1160,7 +1160,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_03').innerHTML = 
                       `Motor 03 : 
                       <span style="color: ${"green"};"> ${"Running..."} </span> |
-                      <span style="color: ${Motor_3_Auto_Manual_Colour};"> ${Motor_3_Auto_Manual} </span>`;
+                      <span style="color: ${Motor_3_Auto_Manual_Colour};"> ${Motor_3_Auto_Manual} </span>`; // Motor_3_Auto_Manual
 
                     
                     }else{ 
@@ -1168,7 +1168,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_03').innerHTML = 
                       `Motor 03 : 
                       <span style="color: ${"blue"};"> ${"Stop"} </span> |
-                      <span style="color: ${Motor_3_Auto_Manual_Colour};"> ${Motor_3_Auto_Manual} </span>`;                      
+                      <span style="color: ${Motor_3_Auto_Manual_Colour};"> ${Motor_3_Auto_Manual} </span>`;  // Motor_3_Auto_Manual                    
 
 
                  } // Pump_3 Display End
@@ -1192,7 +1192,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_04').innerHTML = 
                       `Motor 04 : 
                       <span style="color: ${"green"};"> ${"Running..."} </span> |
-                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${Motor_4_Auto_Manual} </span>`;
+                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${""} </span>`; // Motor_4_Auto_Manual
 
                     
                     }else{ 
@@ -1200,7 +1200,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_04').innerHTML = 
                       `Motor 04 : 
                       <span style="color: ${"blue"};"> ${"Stop"} </span> |
-                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${Motor_4_Auto_Manual} </span>`;                    
+                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${""} </span>`;   // Motor_4_Auto_Manual                 
 
 
                  } // Pump_4 Display End
