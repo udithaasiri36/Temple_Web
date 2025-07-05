@@ -361,7 +361,12 @@
   let inter_Lock = 0;
 
   const correctPassword = "5708";
+  const correctPassword_2 = "2222";
+  const correctPassword_3 = "3333";
+  const correctPassword_4 = "4444";
+  const correctPassword_5 = "5555";
   const passwordInput = document.getElementById("passwordInput");
+
   const loginBtn = document.getElementById("loginBtn");
   const secretBox = document.getElementById("secretBox");
   const errorMsg = document.getElementById("errorMsg");
@@ -578,14 +583,14 @@
   let locked = false;
 
 
-
+  let A_M = "1";
   let M1 = "1";
   let M2 = "1";
   let M3 = "1";
   let M4 = "1";
  
-
-  let A_M = "1";
+  let OP_Password = "0000";
+  
 
 
 
@@ -620,10 +625,43 @@
     if (locked) return;
 
     const input = passwordInput.value;
-    if (input === correctPassword) {
-      secretBox.style.display = "block";
-      errorMsg.textContent = "";
-      updateToggleFromVariable();
+
+    if (input === "8731" ) {
+
+            OP_Password = "8731"
+
+            secretBox.style.display = "block";
+            errorMsg.textContent = "";
+            updateToggleFromVariable();
+
+                  // Element එක hide කරන්න
+             document.getElementById("passwordInput").style.display = "none";////// hide
+             document.getElementById("passwordHeading").style.display = "none";  // hide 
+             document.getElementById("loginBtn").style.display = "none"; ///////// hide button
+
+    } else if (input === "9548") {
+
+
+           OP_Password = "9548"     
+
+            secretBox.style.display = "block";
+            errorMsg.textContent = "";
+            updateToggleFromVariable();
+
+                  // Element එක hide කරන්න
+             document.getElementById("passwordInput").style.display = "none";////// hide
+             document.getElementById("passwordHeading").style.display = "none";  // hide 
+             document.getElementById("loginBtn").style.display = "none"; ///////// hide button
+    
+
+    } else if (input === "6721") {
+
+
+            OP_Password = "6721"     
+
+            secretBox.style.display = "block";
+            errorMsg.textContent = "";
+            updateToggleFromVariable();
 
                   // Element එක hide කරන්න
              document.getElementById("passwordInput").style.display = "none";////// hide
@@ -631,7 +669,23 @@
              document.getElementById("loginBtn").style.display = "none"; ///////// hide button
 
 
+    } else if (input === "9213") {
+
+
+            OP_Password = "9213"  
+
+            secretBox.style.display = "block";
+            errorMsg.textContent = "";
+            updateToggleFromVariable();
+
+                  // Element එක hide කරන්න
+             document.getElementById("passwordInput").style.display = "none";////// hide
+             document.getElementById("passwordHeading").style.display = "none";  // hide 
+             document.getElementById("loginBtn").style.display = "none"; ///////// hide button
+
     } else {
+
+
       attempts++;
       errorMsg.textContent = `Incorrect password (${attempts}/3)`;
       if (attempts >= 3) {
@@ -649,6 +703,10 @@
       }
     }
   }
+
+
+
+
 
 
 
@@ -737,7 +795,7 @@
 
     updateModeDisplay();   
 
-    const valueToSend = on_data === 1 ?  parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
+    const valueToSend = on_data === 1 ?  parseInt(A_M + M1 + M2 + M3 + M4 + OP_Password) : parseInt(A_M + M1 + M2 + M3 + M4 + OP_Password);
    // document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
@@ -765,7 +823,7 @@
 
     updateModeDisplay();
 
-    const valueToSend = motor1_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4) : parseInt(A_M + M1 + M2 + M3 + M4);
+    const valueToSend = motor1_state === 1 ? parseInt(A_M + M1 + M2 + M3 + M4 + OP_Password) : parseInt(A_M + M1 + M2 + M3 + M4 + OP_Password);
    // document.getElementById("Click_Data").innerHTML = `Click Data : <span style="color: green;">${valueToSend}</span>`;
 
     sendToFirebase(valueToSend);
