@@ -937,7 +937,7 @@ function updateMotor02Status() {
          //`Motor 04 : <span style="color: Blue;">${Pump_conn_arry_2_Data_0}</span>`; 
 
 
-         let Pumu_House_Conn_Time = 300;  /// System Stating Time
+         let Pumu_House_Conn_Time = 350;  /// System Stating Time
 
        
          if(Pump_conn_arry_1_Data_0 === 2){ // Pump House Conn Up  Arry line 1
@@ -1028,7 +1028,7 @@ function updateMotor02Status() {
      ///////////////////////############################## System Stating and Display 
      ///////////////////////############################## System Stating and Display
          
-     if(time_pump_conn_count >= 350){ ///// Loding Time ( System Stating)
+     if(time_pump_conn_count >= 390){ ///// Loding Time ( System Stating)
 
          if( Pump_conn_arry_1_Data_Count_Line_1_Up     >= Pumu_House_Conn_Time || 
              Pump_conn_arry_1_Data_Count_Line_1_Down   >= Pumu_House_Conn_Time ||
@@ -1127,7 +1127,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_02').innerHTML = 
                       `Motor 02 : 
                       <span style="color: ${"green"};"> ${"Running..."} </span> |
-                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${""} </span>`; // Motor_2_Auto_Manual
+                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${Motor_2_Auto_Manual} </span>`; // Motor_2_Auto_Manual
 
                     
                     }else{ 
@@ -1135,7 +1135,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_02').innerHTML = 
                       `Motor 02 : 
                       <span style="color: ${"blue"};"> ${"Stop"} </span> |
-                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${""} </span>`;  // Motor_2_Auto_Manual                    
+                      <span style="color: ${Motor_2_Auto_Manual_Colour};"> ${Motor_2_Auto_Manual} </span>`;  // Motor_2_Auto_Manual                    
 
 
                  } // Pump_2 Display End
@@ -1192,7 +1192,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_04').innerHTML = 
                       `Motor 04 : 
                       <span style="color: ${"green"};"> ${"Running..."} </span> |
-                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${""} </span>`; // Motor_4_Auto_Manual
+                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${Motor_4_Auto_Manual} </span>`; // Motor_4_Auto_Manual
 
                     
                     }else{ 
@@ -1200,7 +1200,7 @@ function updateMotor02Status() {
                       document.getElementById('Motor_04').innerHTML = 
                       `Motor 04 : 
                       <span style="color: ${"blue"};"> ${"Stop"} </span> |
-                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${""} </span>`;   // Motor_4_Auto_Manual                 
+                      <span style="color: ${Motor_4_Auto_Manual_Colour};"> ${Motor_4_Auto_Manual} </span>`;   // Motor_4_Auto_Manual                 
 
 
                  } // Pump_4 Display End
@@ -1281,8 +1281,8 @@ function updateMotor02Status() {
             Tank_Err_Count_Down++;
             Stating_Delay_Time++;
 
-            if(Stating_Delay_Time > 15) {
-                Stating_Delay_Time = 15;
+            if(Stating_Delay_Time > 50) {
+                Stating_Delay_Time = 40;
             }
 
 
@@ -1325,11 +1325,11 @@ function updateMotor02Status() {
 
 
 
-                if(Tank_Err_Count_Up > 20) { Tank_Err_Count_Up = 15; }
-                if(Tank_Err_Count_Down > 20) { Tank_Err_Count_Down = 15; }
+                if(Tank_Err_Count_Up > 50) { Tank_Err_Count_Up = 40; }
+                if(Tank_Err_Count_Down > 50) { Tank_Err_Count_Down = 40; }
 
 
-                if(Tank_Err_Count_Up <= 11 && Tank_Err_Count_Down <= 11 && Stating_Delay_Time >= 13 ) { // coon ok and battry Power and Ceb  Nam
+                if(Tank_Err_Count_Up <= 20 && Tank_Err_Count_Down <= 20 && Stating_Delay_Time >= 30 ) { // coon ok and battry Power and Ceb  Nam
 
                   let Tank_Online_Status = "Online";
 
@@ -1424,7 +1424,7 @@ function updateMotor02Status() {
 
 
                
-                if(Tank_Err_Count_Up > 8 || Tank_Err_Count_Down > 8 && Stating_Delay_Time >= 10) {
+                if(Tank_Err_Count_Up > 20 || Tank_Err_Count_Down > 20 && Stating_Delay_Time >= 30) {
 
                     Tank_Conn_Bit = 0;
                     document.getElementById('Tank_Conn').innerHTML = 
